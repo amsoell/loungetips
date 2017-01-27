@@ -1,0 +1,33 @@
+<?php
+  include('config.php');
+  $dbh = mysql_connect('localhost',$dbUsername,$dbPassword);
+  if (!$dbh) die('Not connected : ' . mysql_error());
+  mysql_select_db($dbDatabase) or die('Can\'t use '.$dbDatabase.': ' . mysql_error()); 
+  
+  $sqlx = "SELECT tip, UNIX_TIMESTAMP(entered) AS entered, description FROM tips ORDER BY entered DESC LIMIT 20";
+  $rs = mysql_query($sqlx);
+  
+  $rec = mysql_fetch_array($rs);
+  print '<?xml version="1.0" encoding="utf-8"?>';
+?>
+<rss version="2.0">
+  <channel>
+    <title>CD101 Lounge Tips</title>
+    <link>http://loungetips.com/r/</link>
+    <description>Find and share CD101 Lounge Tips with other CD101 listeners!</description>
+    <language>en-us</language>
+    <lastBuildDate><?php print date('D, d M Y H:i:s', $rec['entered']); ?> -0400</lastBuildDate>
+<?php
+  do {
+?>
+    <item>
+      <title>Your <?php print $rec['description']; ?> lounge tip</title>
+      <link>http://loungetips.com/r/</link>
+      <description>Your <?php print $rec['description']; ?> lounge tip is <?php print $rec['tip']; ?></description>
+      <pubDate><?php print date('D, d M Y H:i:s', $rec['entered']); ?> -0400</pubDate>
+    </item>
+<?php
+  } while ($rec = mysql_fetch_array($rs));
+?>
+  </channel>
+</rss>

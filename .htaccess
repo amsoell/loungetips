@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteRule ^feed\.rss$ http://feeds2.feedburner.com/CD101LoungeTips [R=302,L]
+php_flag allow_url_fopen On
+php_flag allow_url_include On
+php_flag display_errors off
