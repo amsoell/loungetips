@@ -2,7 +2,9 @@
 
 namespace App\Policies\Forum;
 
-class ThreadPolicy extends \Riari\Forum\Policies\ThreadPolic {
+use Riari\Forum\Models\Thread;
+
+class ThreadPolicy extends \Riari\Forum\Policies\ThreadPolicy {
 
 	public function isAdmin($user) {
 		return $user->id==1;

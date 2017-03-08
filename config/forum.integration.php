@@ -17,7 +17,7 @@ return [
         'model' => [
             Riari\Forum\Models\Category::class  => App\Policies\Forum\CategoryPolicy::class,
             Riari\Forum\Models\Thread::class    => App\Policies\Forum\ThreadPolicy::class,
-            Riari\Forum\Models\Post::class      => App\Policies\Forum\PostPolicy::class
+            Riari\Forum\Models\Post::class      => Riari\Forum\Policies\PostPolicy::class
         ]
     ],
 

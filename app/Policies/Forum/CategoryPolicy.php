@@ -10,7 +10,7 @@ class CategoryPolicy extends \Riari\Forum\Policies\CategoryPolicy {
     }
 
     public function createThreads($user, Category $category) {
-        return $this->isAdmin($user);
+        return true;
     }
 
     public function manageThreads($user, Category $category) {
