@@ -15,9 +15,23 @@
   </head>
 
   <body>
-    @include('partial.navigation')
+
     <div class="container">
-      @yield('content')
+      <div class="row">
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
+          <a href="{{ route('home') }}"><img src="/images/logo.png" alt="CD102.5 Lounge Tips" class="img-responsive" /></a>
+        </div>
+      </div>
+      <div class="row row-no-padding">
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
+          @include('partial.navigation.index')
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-10 col-md-offset-1 well">
+          @yield('content')
+        </div>
+      </div>
     </div>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

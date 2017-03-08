@@ -19,10 +19,8 @@ Route::get('top', [ 'as' => 'top', 'uses' => function() {
 	return 'top';
 }]);
 
-Route::get('talk', [ 'as' => 'talk', 'uses' => function() {
-	return 'talk';
-}]);
-
 Route::get('about', [ 'as' => 'about', 'uses' => function() {
 	return view('pages.about.index');
 }]);
+
+Auth::routes();
