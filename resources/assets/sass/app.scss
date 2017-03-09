@@ -24,7 +24,7 @@ body {
 		background-image: linear-gradient(bottom, rgb(81, 81, 81) 24%, rgb(43, 43, 43) 62%);
 	}
 
-	.container .row:last-child {
+	.container > .row:last-child {
 		padding-bottom: 80px;
 	}
 }
