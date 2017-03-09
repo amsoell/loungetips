@@ -23,16 +23,18 @@ class MoveDataFromV1 extends Migration
 			/**
 			 * Import Users
 			 */
-			$sqlx = "SELECT id, username, password, email, registered, num_posts FROM talk_users";
+			$sqlx = "SELECT id, username, password, salt, email, registered, num_posts FROM talk_users";
 			$res = $dbh->query($sqlx);
 
 			$user_post_count = [];
 			while ($row = $res->fetch_assoc()) {
-				$user             = new User();
-				$user->id         = $row['id'];
-				$user->name       = $row['username'];
-				$user->password   = $row['password'];
-				$user->email      = $row['email'];
+				$user            = new User();
+				$user->id        = $row['id'];
+				$user->name      = $row['username'];
+				$user->password  = $row['password'];
+				$user->opassword = $row['password'];
+				$user->osalt     = $row['salt'];
+				$user->email     = $row['email'];
 				$user->setCreatedAt($row['registered']);
 				$user->setUpdatedAt($row['registered']);
 				$user->save();
