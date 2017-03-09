@@ -1,3 +1,3 @@
 <div class="col-xs-2">
-	<a href="{{ route('tip.report', [ 'tip' => $tip->id, 'report' => 1 ]) }}"><img class="hover thumbs up" rel="/images/thumbsuphover.jpg" src="/images/thumbsup.jpg" /></a>
+	<a href="{{ route('tip.report', [ 'tip' => $tip->id, 'report' => 1 ]) }}"><i class="thumbs fa fa-thumbs-up fa-4" aria-hidden="true"></i></a>
 </div>

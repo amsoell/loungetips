@@ -7,14 +7,36 @@
 
 require('./bootstrap');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+$(document).ready(function() {
+	$('img.hover').hover(function() {
+		console.log('test');
+		rel = $(this).attr('rel');
+		src = $(this).attr('src');
+		$(this).attr('src', rel).attr('rel', src);
+	}, function() {
+		rel = $(this).attr('rel');
+		src = $(this).attr('src');
+		$(this).attr('src', rel).attr('rel', src);
+	});
 
-Vue.component('example', require('./components/Example.vue'));
+	$('img.thumbs').click(function() {
+		$isGood = ($(this).attr('class').indexOf('down')==-1);
+		$thumb = $(this);
+		$.ajax({
+			url: '/ajax/report.php',
+			dataType: 'json',
+			data: 'tip='+$(this).parents('.tip').attr('rel')+'&value='+($isGood?1:0),
+			success: function(o) {
+				if (o.success) {
+					$value = parseInt($thumb.parents('.tip').find('.detail .totalscore').attr('rel'));
+					$value += ($isGood?1:-1);
+					$thumb.parents('.tip').find('.detail .totalscore').attr('rel', $value).html(($value>=0?'+':'-')+$value);
+				} else {
+					$thumb.parents('.tip').find('.detail').addClass('error').html(o.errmsg);
+				}
+				$thumb.parents('.tip').find('.thumbs').fadeOut();
+			}
 
-const app = new Vue({
-    el: '#app'
+		});
+	});
 });

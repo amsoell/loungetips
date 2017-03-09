@@ -19,7 +19,13 @@ body {
 
 .tip {
 	.thumbs {
-		padding-top: 5px;
+		padding-top: 10px;
+		font-size: 3.0em;
+		color: #222;
+
+		&:hover {
+			text-shadow: 0 0 15px #999;
+		}
 	}
 
 	.text {
