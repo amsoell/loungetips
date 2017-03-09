@@ -43,7 +43,7 @@ class MoveDataFromV1 extends Migration
 			/**
 			 * Importing Tips
 			 */
-			$sqlx = "SELECT id, tip, description, entered, useragent, remoteaddr FROM tips";
+			$sqlx = "SELECT id, tip, description, entered, useragent, remoteaddr, user FROM tips";
 			$res = $dbh->query($sqlx);
 
 			while ($row = $res->fetch_assoc()) {
@@ -53,17 +53,11 @@ class MoveDataFromV1 extends Migration
 				$tip->description = $row['description'];
 				$tip->remoteaddr  = $row['remoteaddr'];
 				$tip->useragent   = $row['useragent'];
+				$tip->user_id     = $row['user'];
 				$tip->setCreatedAt($row['entered']);
 				$tip->setUpdatedAt($row['entered']);
 
 				$tip->save();
-			}
-
-			/**
-			 * Assigning random tips to users to keep contribution values
-			 */
-			foreach ($user_post_count as $key => $posts) {
-				$tips = Tip::doesntHave('user')->orderBy('id')->limit($posts)->update([ 'user_id' => $key ]);
 			}
 
 			/**
