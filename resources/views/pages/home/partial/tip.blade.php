@@ -7,10 +7,10 @@
 			</div>
 			<div class="col-xs-8 text-center">
 				<div class="text">
-					Your <b>3am</b> tip is <b class="thetip">test</b>
+					Your <b>{{ $tip->description }}</b> tip is <b class="thetip">{{ $tip->name }}</b>
 				</div>
 				<div class="detail">
-					Shared by Guest &middot; 3:19 am &middot;
+					Shared by {{ $tip->user?$tip->user->name:'Guest' }} &middot; {{ $tip->created_at->format('g:i a') }} &middot;
 					<span title="0 Good 0 Bad">
 						Confidence: <span class="totalscore" rel="0">Unknown</span>
 					</span>
