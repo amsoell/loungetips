@@ -5,6 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Tip;
 use App\User;
+use Riari\Forum\Models\Category;
+use Riari\Forum\Models\Thread;
+use Riari\Forum\Models\Post;
 
 class MoveDataFromV1 extends Migration
 {
@@ -16,6 +19,10 @@ class MoveDataFromV1 extends Migration
 	public function up() {
 		if (env('DB_MIGRATE', false)) {
 			$dbh = new mysqli(env('DB_MIGRATE'), 'db170824', 'sh0esusing', 'db170824_loungetips');
+
+			/**
+			 * Import Users
+			 */
 			$sqlx = "SELECT id, username, password, email, registered, num_posts FROM talk_users";
 			$res = $dbh->query($sqlx);
 
@@ -33,6 +40,9 @@ class MoveDataFromV1 extends Migration
 				$user_post_count[$row['id']] = $row['num_posts'];
 			}
 
+			/**
+			 * Importing Tips
+			 */
 			$sqlx = "SELECT id, tip, description, entered, useragent, remoteaddr FROM tips";
 			$res = $dbh->query($sqlx);
 
@@ -49,9 +59,66 @@ class MoveDataFromV1 extends Migration
 				$tip->save();
 			}
 
+			/**
+			 * Assigning random tips to users to keep contribution values
+			 */
 			foreach ($user_post_count as $key => $posts) {
 				$tips = Tip::doesntHave('user')->orderBy('id')->limit($posts)->update([ 'user_id' => $key ]);
 			}
+
+			/**
+			 * Importing Forum Forums (?? I know)
+			 */
+			$sqlx = "SELECT id, forum_name, disp_position, cat_id FROM talk_forums";
+			$res = $dbh->query($sqlx);
+
+			while ($row = $res->fetch_assoc()) {
+				$category                 = new Category();
+				$category->id             = $row['id'];
+				$category->title          = $row['forum_name'];
+				$category->weight         = $row['disp_position'];
+				$category->enable_threads = 1;
+
+				$category->save();
+			}
+
+			/**
+			 * Importing Forum Topics
+			 */
+			$sqlx = "SELECT id, subject, posted, last_post, forum_id, poster, num_replies FROM talk_topics";
+			$res = $dbh->query($sqlx);
+
+			while ($row = $res->fetch_assoc()) {
+				$thread              = new Thread();
+				$thread->id          = $row['id'];
+				$thread->category_id = $row['forum_id'];
+				$thread->author_id   = User::where('name', $row['poster'])->first()->id;
+				$thread->title       = $row['subject'];
+				$thread->reply_count = $row['num_replies'];
+				$thread->setCreatedAt($row['posted']);
+				$thread->setUpdatedAt($row['last_post']);
+
+				$thread->save();
+			}
+
+			/**
+			 * Importing Forum Posts
+			 */
+			$sqlx = "SELECT id, poster_id, message, posted, topic_id FROM talk_posts";
+			$res = $dbh->query($sqlx);
+
+			while ($row = $res->fetch_assoc()) {
+				$post            = new Post();
+				$post->id        = $row['id'];
+				$post->thread_id = $row['topic_id'];
+				$post->author_id = $row['poster_id'];
+				$post->content   = mb_convert_encoding($row['message'], 'UTF-8');
+				$post->setCreatedAt($row['posted']);
+				$post->setUpdatedAt($row['posted']);
+
+				$post->save();
+			}
+
 		}
 	}
 
