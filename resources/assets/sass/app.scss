@@ -8,12 +8,24 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+html {
+	height: 100%;
+}
+
 body {
 	background: url('/images/bg.png') top repeat-x #000;
+	overflow: hidden;
+	position: relative;
+	min-height: 100%;
+	height: auto
 
 	nav {
 		border: 0;
 		background-image: linear-gradient(bottom, rgb(81, 81, 81) 24%, rgb(43, 43, 43) 62%);
+	}
+
+	.container .row:last-child {
+		padding-bottom: 80px;
 	}
 }
 
