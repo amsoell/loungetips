@@ -7,6 +7,7 @@ use App\Report;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
@@ -16,7 +17,7 @@ class TipController extends Controller {
 		// Quick and dirty validation
 		if (Tip::where('remoteaddr', $request->ip())->where('description', $request->get('description'))->exists()) {
 			$request->session()->flash('status', [
-				'type' => 'alert',
+				'type' => 'danger',
 				'body' => 'You have already submitted a tip for this period.'
 			]);
 		} elseif (! ($request->has('tip') && $request->has('description'))) {
@@ -34,11 +35,13 @@ class TipController extends Controller {
 			$tip              = new Tip();
 			$tip->name        = $request->get('tip');
 			$tip->description = $request->get('description');
-			$tip->remoteaddr = $request->ip();
-			$tip->useragent  = $request->header('User-Agent');
+			$tip->remoteaddr  = $request->ip();
+			$tip->useragent   = $request->header('User-Agent');
 			if (Auth::user()) $tip->user()->associate(Auth::user());
 
 			$tip->save();
+
+			Cache::put('totalTips', Tip::count(), 1440);
 
 			$request->session()->flash('status', [
 				'type' => 'success',
