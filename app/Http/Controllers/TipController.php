@@ -77,8 +77,11 @@ class TipController extends Controller {
 	}
 
 	public function pageHome(Request $request) {
-		$tips = Tip::today()->orderBy('created_at', 'desc')->get();
-		return view('pages.home.index', compact('tips'));
+		$tips = Tip::with(['reports' => function ($query) use ($request) {
+			$query->where('remoteaddr', $request->ip());
+		}])->today()->orderBy('created_at', 'desc')->get();
+
+		return view('pages.home.index', compact('tips', 'request'));
 	}
 
 	public function pageTop() {
