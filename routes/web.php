@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', [ 'as' => 'home', 'uses' => function () {
-    return view('pages.home.index');
-}]);
+Route::get('/', [ 'as' => 'home', 'uses' => 'TipController@pageHome']);
 
 Route::get('top', [ 'as' => 'top', 'uses' => function() {
 	return 'top';
