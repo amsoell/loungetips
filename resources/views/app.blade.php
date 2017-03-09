@@ -34,6 +34,15 @@
         </div>
       </div>
     </div>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted text-center">
+          Copyright &copy; {{ date("Y") }} &mdash;
+          LoungeTips: 126xx tips shared and counting! &mdash;
+          LoungeTips.com is NOT affiliated with CD102.5
+        </p>
+      </div>
+    </footer>
     <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
