@@ -30,6 +30,11 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-md-10 col-md-offset-1 well">
+          @if(Session::has('status'))
+          <div class="alert alert-{{ Session::get('status.type') }}" role="alert">
+            {{ Session::get('status.body') }}
+          </div>
+          @endif
           @yield('content')
         </div>
       </div>
