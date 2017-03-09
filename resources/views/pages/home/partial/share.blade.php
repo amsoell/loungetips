@@ -1,5 +1,5 @@
 		<div class="well">
-			<form action="{{ route('share') }}" method="post">
+			<form action="{{ route('tip.share') }}" method="post">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<label style="width:auto; padding-right:10px;">Your</label>
 				<select name="description" id="description">

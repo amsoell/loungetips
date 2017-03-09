@@ -10,6 +10,10 @@ class Tip extends Model {
 		return $this->belongsTo(User::class);
 	}
 
+	public function reports() {
+		return $this->hasMany(Report::class);
+	}
+
 	public function scopeToday($query) {
 		return $query->where('created_at', '>=', Carbon::today());
 	}

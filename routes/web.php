@@ -12,7 +12,8 @@
 */
 
 Route::get('/', [ 'as' => 'home', 'uses' => 'TipController@pageHome']);
-Route::post('/', [ 'as' => 'share', 'uses' => 'TipController@store']);
+Route::post('/tip', [ 'as' => 'tip.share', 'uses' => 'TipController@store']);
+Route::get('/tip/{tip}/report', [ 'as' => 'tip.report', 'uses' => 'TipController@report']);
 
 Route::get('top', [ 'as' => 'top', 'uses' => function() {
 	return 'top';

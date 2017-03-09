@@ -16,12 +16,14 @@ class CreateTipsReportTable extends Migration
 		{
 			$table->increments('id');
 			$table->integer('tip_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
 			$table->string('remoteaddr', 15);
 			$table->string('useragent', 255);
 			$table->integer('report');
 			$table->timestamps();
 
 			$table->foreign('tip_id')->unsigned()->references('id')->on('tips')->onDelete('cascade');
+			$table->foreign('user_id')->unsigned()->references('id')->on('users')->onDelete('set null');
 		});
 	}
 
