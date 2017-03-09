@@ -5,7 +5,7 @@
 			@includeWhen($tip->reports->count()==0, 'pages.home.partial.thumbsup')
 			<div class="col-xs-{{ $tip->reports->count()==0?'8':'12' }} text-center">
 				<div class="text">
-					Your <b>{{ $tip->description }}</b> tip is <b class="thetip">{{ $tip->name }}</b>
+					Your <b>{{ $tip->description }}</b> tip is <b class="thetip">{{ $tip->tip }}</b>
 				</div>
 				<div class="detail">
 					Shared by {{ $tip->user?$tip->user->name:'Guest' }} &middot; {{ $tip->created_at->format('g:i a') }} &middot;
