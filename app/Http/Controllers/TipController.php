@@ -33,7 +33,7 @@ class TipController extends Controller {
 		} else {
 
 			$tip              = new Tip();
-			$tip->name        = $request->get('tip');
+			$tip->tip         = $request->get('tip');
 			$tip->description = $request->get('description');
 			$tip->remoteaddr  = $request->ip();
 			$tip->useragent   = $request->header('User-Agent');

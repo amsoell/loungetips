@@ -9,8 +9,8 @@
 				</div>
 				<div class="detail">
 					Shared by {{ $tip->user?$tip->user->name:'Guest' }} &middot; {{ $tip->created_at->format('g:i a') }} &middot;
-					<span title="0 Good 0 Bad">
-						Confidence: <span class="totalscore" rel="0">Unknown</span>
+					<span title="{{ $tip->reports->where('report', 1)->count() }} Good {{ $tip->reports->where('report', 0)->count() }} Bad">
+						Confidence: <span class="totalscore" rel="0">{{ $tip->reports->sum('report') - ($tip->reports->count() - $tip->reports->sum('report')) }}</span>
 					</span>
 				</div>
 			</div>
