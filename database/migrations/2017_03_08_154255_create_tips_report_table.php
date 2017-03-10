@@ -18,7 +18,7 @@ class CreateTipsReportTable extends Migration
 			$table->integer('tip_id')->unsigned();
 			$table->integer('user_id')->unsigned()->nullable();
 			$table->string('remoteaddr', 15);
-			$table->string('useragent', 255);
+			$table->string('useragent', 255)->nullable();
 			$table->integer('report');
 			$table->timestamps();
 

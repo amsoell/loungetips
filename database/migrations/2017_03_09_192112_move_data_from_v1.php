@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\Report;
 use App\Tip;
 use App\User;
 use Riari\Forum\Models\Category;
@@ -115,6 +116,24 @@ class MoveDataFromV1 extends Migration
 				$post->save();
 			}
 
+			/**
+			 * Importing Tip Reports
+			 */
+			$sqlx = "SELECT id, remoteaddr, reported, report FROM report";
+			$res = $dbh->query($sqlx);
+
+			while ($row = $res->fetch_assoc()) {
+				if (Tip::find($row['id'])) {
+					$report             = new Report();
+					$report->tip_id     = $row['id'];
+					$report->report     = $row['report'];
+					$report->remoteaddr = $row['remoteaddr'];
+					$report->setCreatedAt($row['reported']);
+					$report->setUpdatedAt($row['reported']);
+
+					$report->save();
+				}
+			}
 		}
 	}
 
