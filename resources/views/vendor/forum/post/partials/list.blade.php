@@ -1,7 +1,28 @@
 <tr id="post-{{ $post->sequence }}" class="{{ $post->trashed() ? 'deleted' : '' }}" class="post-body">
     <td class="author-info">
         <strong>{!! $post->authorName !!}</strong><br />
-        Tips shared: {{ $post->author->load('tips')->tips()->count() }}
+        <em>
+        @php
+            $sharedTips = $post->author->load('tips')->tips()->count();
+
+            if ($sharedTips >= 1025) {
+                echo 'Wowie Howie!';
+            } elseif ($sharedTips >= 500) {
+                echo 'Lounge Tip God';
+            } elseif ($sharedTips >= 100) {
+                echo 'Lounge Tip Superstar';
+            } elseif ($sharedTips >= 50) {
+                echo 'Lounge Tip Rockstar';
+            } elseif ($sharedTips >= 10) {
+                echo 'Tip Supplier';
+            } elseif ($sharedTips >= 1) {
+                echo 'Tip Contributor';
+            } else {
+                echo 'Lounge Tip Leech';
+            }
+        @endphp
+        </em><br />
+        Tips shared: {{ $sharedTips }}
     </td>
     <td class="content">
         @if (!is_null($post->parent))
