@@ -3,7 +3,6 @@
     <div class="container">
         @include ('forum::partials.breadcrumbs')
         @include ('forum::partials.alerts')
-
         @yield('content')
     </div>
 

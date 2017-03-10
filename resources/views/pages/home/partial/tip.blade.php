@@ -1,7 +1,8 @@
 <div class="row">
 	<div class="col-xs-12 col-md-8 col-md-offset-2">
-		@foreach ($tips as $tip)
-		<div class="row well tip">
+		@foreach ($tips as $index => $tip)
+		@includeWhen($tips->count()==1 || $tips->count()==$index+1 || $index+1==2, 'partial.ads.tip')
+		<div class="row well tip tip-{{ $index }}">
 			@includeWhen($tip->reports->count()==0, 'pages.home.partial.thumbsup')
 			<div class="col-xs-{{ $tip->reports->count()==0?'8':'12' }} text-center">
 				<div class="text">

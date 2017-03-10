@@ -77,7 +77,8 @@
                 </thead>
                 <tbody>
                     @if (!$threads->isEmpty())
-                        @foreach ($threads as $thread)
+                        @foreach ($threads as $index => $thread)
+                            @includeWhen($threads->count()==1 || $threads->count()==$index+1 || $index+1==2, 'partial.ads.forum')
                             <tr class="{{ $thread->trashed() ? "deleted" : "" }}">
                                 <td>
                                     <span class="pull-right">
