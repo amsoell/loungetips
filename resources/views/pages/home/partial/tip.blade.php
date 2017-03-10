@@ -18,5 +18,35 @@
 			@includeWhen($tip->reports->count()==0, 'pages.home.partial.thumbsdown')
 		</div>
 		@endforeach
+		<div class="row well tip tip-{{ $index }}">
+			<div class="col-xs-12 text-center">
+				<button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#loungeModal">
+					Go to the Lounge
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="loungeModal" tabindex="-1" role="dialog" aria-labelledby="loungeModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content" style="height: 700px">
+			<div class="modal-header">
+				<h4 class="modal-title">The Lounge</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12">
+						@include('partial.ads.lounge')
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<iframe src="http://els.fimc.net/wwcd/els/elsLoginFrm.asp" frameborder="0" scrolling="yes" style="width: 100%; height: 550px"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
