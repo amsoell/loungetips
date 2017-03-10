@@ -43,7 +43,7 @@
       <div class="container">
         <p class="text-muted text-center">
           Copyright &copy; {{ date("Y") }} &mdash;
-          LoungeTips: {{ Cache::get('totalTips', 'Over 12,000') }} tips shared and counting! &mdash;
+          LoungeTips: {{ number_format(Cache::get('totalTips', '12000'), 0, '.', ',') }} tips shared and counting! &mdash;
           LoungeTips.com is NOT affiliated with CD102.5
         </p>
       </div>
