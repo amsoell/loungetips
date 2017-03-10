@@ -17,6 +17,19 @@
             <li><a href="{{ route('top') }}">Top Tips</a></li>
           </ul>
           @includeWhen(!Auth::user(), 'partial.navigation.user')
-        </div><!--/.nav-collapse -->
+        </div>
+        @if (Cache::has('recentThreads'))
+        <div class="talking">
+          What people are talking about:
+          @foreach (Cache::get('recentThreads') as $thread)
+            <span class="thread">
+            @if (!$loop->first)
+              &nbsp;&middot;&nbsp;
+            @endif
+              <a href="{{ Forum::route('thread.show', $thread) }}">{{ $thread->title }}</a>
+            </span>
+          @endforeach
+        </div>
+        @endif
       </div>
     </nav>

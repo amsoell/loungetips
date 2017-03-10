@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tip;
 use App\Report;
+use Riari\Forum\Models\Thread;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Notifications\TipVerified;
@@ -44,7 +45,7 @@ class TipController extends Controller {
 
 			$tip->save();
 
-			Cache::put('totalTips', Tip::count(), 1440);
+			Cache::add('totalTips', Tip::count(), 60);
 
 			$request->session()->flash('status', [
 				'type' => 'success',
@@ -91,6 +92,13 @@ class TipController extends Controller {
 	}
 
 	public function pageHome(Request $request) {
+		// Update master tip count
+		Cache::add('totalTips', Tip::count(), 60);
+
+		// Update topic overview
+		Cache::add('recentThreads', Thread::orderBy('updated_at', 'desc')->limit(5)->get(), 60);
+
+		// Get today's tips
 		$tips = Tip::with(['reports' => function ($query) use ($request) {
 			$query->where('remoteaddr', $request->ip());
 		}])->today()->orderBy('created_at', 'desc')->get();
