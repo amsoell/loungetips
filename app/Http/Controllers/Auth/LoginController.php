@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -35,5 +39,27 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    public function login(Request $request) {
+        if (Auth::attempt($request->only(['email', 'password'])))
+            return redirect()->intended($this->redirectTo);
+
+        // Try old login method
+        $user = User::where('email', $request->get('email'))->first();
+        $opassword = $user->password;
+        $osalt = $user->osalt;
+
+        if (sha1($osalt.sha1($request->get('password'))) == $opassword) {
+            $user->update(['password' => Hash::make($request->get('password'))]);
+            Auth::login($user);
+            return redirect()->intended($this->redirectTo);
+        }
+
+        $request->session()->flash('status', [
+            'type' => 'danger',
+            'body' => 'Username or password not found.'
+        ]);
+        return redirect('/login');
     }
 }
