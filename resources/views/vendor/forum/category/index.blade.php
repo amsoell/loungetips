@@ -8,7 +8,8 @@
 
     <h2>{{ trans('forum::general.index') }}</h2>
 
-    @foreach ($categories as $category)
+    @foreach ($categories as $index => $category)
+        @includeWhen($categories->count()==1 || $categories->count()==$index+1 || $index+1==2, 'partial.ads.tip')
         <table class="table table-index">
             <thead>
                 <tr>
