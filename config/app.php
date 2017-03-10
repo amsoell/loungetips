@@ -180,6 +180,8 @@ return [
         Riari\Forum\ForumServiceProvider::class,
         Riari\Forum\Frontend\ForumFrontendServiceProvider::class,
 
+        NotificationChannels\Twitter\TwitterServiceProvider::class,
+
     ],
 
     /*

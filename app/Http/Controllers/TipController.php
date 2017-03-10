@@ -6,12 +6,15 @@ use App\Tip;
 use App\Report;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Notifications\TipVerified;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Exception;
 
 class TipController extends Controller {
+	use Notifiable;
 
 	public function store(Request $request) {
 		// Quick and dirty validation
@@ -74,6 +77,14 @@ class TipController extends Controller {
 				'type' => 'success',
 				'body' => 'Thank you for reporting!'
 			]);
+
+			if ((Tip::today()->where('tweeted', true)->count() > 0) &&
+				($tip->reports->sum('report') - ($tip->reports->count() - $tip->reports->sum('report') > 0) >=5 )) {
+				// First verified tip of the day. Let's tweet about it
+				$this->notify(new TipVerified($tip));
+				$tip->tweeted = true;
+				$tip->update();
+			}
 		}
 
 		return redirect()->route('home');

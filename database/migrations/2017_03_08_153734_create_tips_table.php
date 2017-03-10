@@ -17,6 +17,7 @@ class CreateTipsTable extends Migration
 			$table->integer('user_id')->unsigned()->nullable();
 			$table->string('tip', 35);
 			$table->string('description', 35);
+			$table->boolean('tweeted')->default(false);
 			$table->string('remoteaddr', 15)->nullable();
 			$table->string('useragent', 255)->nullable();
 			$table->timestamps();
