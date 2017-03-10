@@ -88,8 +88,8 @@ class TipController extends Controller {
 	}
 
 	public function pageTop() {
-		$topTips30 = Tip::select(DB::raw("name, COUNT(*) as count"))->groupBy('name')->orderBy('count', 'desc')->where('created_at', '>=', Carbon::now()->subDays(30))->limit(10)->get();
-		$topTips = Tip::select(DB::raw("name, COUNT(*) as count"))->groupBy('name')->orderBy('count', 'desc')->limit(10)->get();
+		$topTips30 = Tip::select(DB::raw("tip, COUNT(*) as count"))->groupBy('tip')->orderBy('count', 'desc')->where('created_at', '>=', Carbon::now()->subDays(30))->limit(10)->get();
+		$topTips = Tip::select(DB::raw("tip, COUNT(*) as count"))->groupBy('tip')->orderBy('count', 'desc')->limit(10)->get();
 
 		return view('pages.top.index', compact('topTips30', 'topTips'));
 	}

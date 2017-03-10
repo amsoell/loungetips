@@ -11,14 +11,14 @@
 				<h3>Past 30 Days</h3>
 				<ol>
 					@foreach ($topTips30 as $tip)
-					<li>{{ $tip->name }} ({{ $tip->count }}x)</li>
+					<li>{{ ucfirst(strtolower($tip->tip)) }} ({{ $tip->count }}x)</li>
 					@endforeach
 				</ol>
 
 				<h3>All-Time Top Tips</h3>
 				<ol>
 					@foreach ($topTips as $tip)
-					<li>{{ $tip->name }} ({{ $tip->count }}x)</li>
+					<li>{{ ucfirst(strtolower($tip->tip)) }} ({{ $tip->count }}x)</li>
 					@endforeach
 				</ol>
 			</div>
