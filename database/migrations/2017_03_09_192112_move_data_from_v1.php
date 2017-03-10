@@ -119,19 +119,28 @@ class MoveDataFromV1 extends Migration
 			/**
 			 * Importing Tip Reports
 			 */
-			$sqlx = "SELECT id, remoteaddr, reported, report FROM report";
+			$sqlx = "SELECT COUNT(*) AS totalCount FROM report";
 			$res = $dbh->query($sqlx);
+			if ($row = $res->fetch_assoc()) {
+				$reportCount = $row['totalCount'];
 
-			while ($row = $res->fetch_assoc()) {
-				if (Tip::find($row['id'])) {
-					$report             = new Report();
-					$report->tip_id     = $row['id'];
-					$report->report     = $row['report'];
-					$report->remoteaddr = $row['remoteaddr'];
-					$report->setCreatedAt($row['reported']);
-					$report->setUpdatedAt($row['reported']);
+				for ($i=0; $i<$reportCount; $i+=200) {
 
-					$report->save();
+					$sqlx = "SELECT id, remoteaddr, reported, report FROM report LIMIT $i, 200";
+					$res = $dbh->query($sqlx);
+
+					while ($row = $res->fetch_assoc()) {
+						if (Tip::find($row['id'])) {
+							$report             = new Report();
+							$report->tip_id     = $row['id'];
+							$report->report     = $row['report'];
+							$report->remoteaddr = $row['remoteaddr'];
+							$report->setCreatedAt($row['reported']);
+							$report->setUpdatedAt($row['reported']);
+
+							$report->save();
+						}
+					}
 				}
 			}
 		}
