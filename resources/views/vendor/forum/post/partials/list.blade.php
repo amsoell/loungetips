@@ -12,14 +12,14 @@
                 </strong>
             </p>
             <blockquote>
-                {!! str_limit(Forum::render($post->parent->content)) !!}
+                {!! str_limit((new \Golonka\BBCode\BBCodeParser)->parse(Forum::render($post->parent->content))) !!}
             </blockquote>
         @endif
 
         @if ($post->trashed())
             <span class="label label-danger">{{ trans('forum::general.deleted') }}</span>
         @else
-            {!! Forum::render($post->content) !!}
+            {!! (new \Golonka\BBCode\BBCodeParser)->parse(Forum::render($post->content)) !!}
         @endif
         <br /><br />
         <div class="row">
