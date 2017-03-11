@@ -18,7 +18,7 @@
 			@includeWhen($tip->reports->count()==0, 'pages.home.partial.thumbsdown')
 		</div>
 		@endforeach
-		<div class="row well tip tip-{{ $index }}">
+		<div class="row well">
 			<div class="col-xs-12 text-center">
 				<button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#loungeModal">
 					Go to the Lounge
