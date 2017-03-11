@@ -1,6 +1,7 @@
 <tr id="post-{{ $post->sequence }}" class="{{ $post->trashed() ? 'deleted' : '' }}" class="post-body">
     <td class="author-info">
         <strong>{!! $post->authorName !!}</strong><br />
+        <img src="//www.gravatar.com/avatar/{{ md5($post->author->email) }}?d=retro" /><br />
         <em>
         @php
             $sharedTips = $post->author->load('tips')->tips()->count();
