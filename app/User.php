@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Riari\Forum\Models\Post;
+use Riari\Forum\Models\Thread;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -29,5 +31,13 @@ class User extends Authenticatable
 
     public function tips() {
         return $this->hasMany(Tip::class);
+    }
+
+    public function posts() {
+        return $this->hasMany(Post::class, 'author_id');
+    }
+
+    public function threads() {
+        return $this->hasMany(Thread::class, 'author_id');
     }
 }

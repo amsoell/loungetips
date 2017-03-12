@@ -90,3 +90,19 @@ textarea {
 		padding-top: 15px;
 	}
 }
+
+h1, h2, h3, h4, h5, h5 {
+	&.no-margin-top, &.no-margin {
+		margin-top: 0;
+	}
+
+	&.no-margin-bottom, &.no-margin {
+		margin-bottom: 0;
+	}
+}
+
+@media (max-width: 768px) {
+	  .col-xs-12.text-right, .col-xs-12.text-left {
+			text-align: center;
+	   }
+	}
