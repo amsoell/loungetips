@@ -50,12 +50,12 @@ class LoginController extends Controller
         try {
             $user = User::where('email', $request->get('email'))->firstOrFail();
         } catch (ModelNotFoundException $e) {
-            $request->session()->flash('status', [
-                'type' => 'danger',
-                'body' => 'Invalid username or password.'
+            return redirect()->back()->withInput()->with([
+                'status' => [
+                    'type' => 'danger',
+                    'body' => 'Invalid username or password.'
+                ]
             ]);
-
-            return redirect()->route('login');
         }
 
         $opassword = $user->password;

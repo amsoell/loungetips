@@ -20,20 +20,20 @@ class TipController extends Controller {
 	public function store(Request $request) {
 		// Quick and dirty validation
 		if (Tip::where('remoteaddr', $request->ip())->where('description', $request->get('description'))->exists()) {
-			$request->session()->flash('status', [
+			$status =[
 				'type' => 'danger',
 				'body' => 'You have already submitted a tip for this period.'
-			]);
+			];
 		} elseif (! ($request->has('tip') && $request->has('description'))) {
-			$request->session()->flash('status', [
+			$status = [
 				'type' => 'danger',
 				'body' => 'Please enter a tip and associated time period.'
-			]);
+			];
 		} elseif (preg_match('/^[A-Za-z0-9]+$/i', $request->get('tip'))===false) {
-			$request->session()->flash('status', [
+			$status = [
 				'type' => 'danger',
 				'body' => 'Tips can only include letters and numbers. No spaces or punctuation, please.'
-			]);
+			];
 		} else {
 
 			$tip              = new Tip();
@@ -47,22 +47,22 @@ class TipController extends Controller {
 
 			Cache::add('totalTips', Tip::count(), 60);
 
-			$request->session()->flash('status', [
+			$status = [
 				'type' => 'success',
 				'body' => 'Thank you for sharing!'
-			]);
+			];
 		}
 
-		return redirect()->route('home');
+		return redirect()->back()->with(compact('status'));
 	}
 
 	public function report(Request $request, Tip $tip) {
 		// Quick and dirty validation
 		if ($tip->reports()->where('remoteaddr', $request->ip())->exists()) {
-			$request->session()->flash('status', [
+			$status = [
 				'type' => 'danger',
 				'body' => 'You have already reported on this tip.'
-			]);
+			];
 		} else {
 
 			$report = new Report();
@@ -74,10 +74,10 @@ class TipController extends Controller {
 
 			$report->save();
 
-			$request->session()->flash('status', [
+			$status =[
 				'type' => 'success',
 				'body' => 'Thank you for reporting!'
-			]);
+			];
 
 			if ((Tip::today()->where('tweeted', true)->count() > 0) &&
 				($tip->reports->sum('report') - ($tip->reports->count() - $tip->reports->sum('report') > 0) >=5 )) {
@@ -88,7 +88,7 @@ class TipController extends Controller {
 			}
 		}
 
-		return redirect()->route('home');
+		return redirect()->back()->with(compact('status'));
 	}
 
 	public function pageHome(Request $request) {
