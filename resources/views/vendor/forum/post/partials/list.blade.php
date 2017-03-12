@@ -1,6 +1,6 @@
 <tr id="post-{{ $post->sequence }}" class="{{ $post->trashed() ? 'deleted' : '' }}" class="post-body">
     <td class="author-info">
-        <strong>{!! $post->authorName !!}</strong><br />
+        <strong><a href="{{ route('user.profile', $post->author) }}">{!! $post->authorName !!}</a></strong><br />
         <img src="//www.gravatar.com/avatar/{{ md5($post->author->email) }}?d=retro" /><br />
         <em>
         @php
@@ -29,7 +29,7 @@
         @if (!is_null($post->parent))
             <p>
                 <strong>
-                    {{ trans('forum::general.response_to', ['item' => $post->parent->authorName]) }}
+                    <a href="{{ route('user.profile', $post->parent->author) }}">{{ trans('forum::general.response_to', ['item' => $post->parent->authorName]) }}</a>
                     (<a href="{{ Forum::route('post.show', $post->parent) }}">{{ trans('forum::posts.view') }}</a>):
                 </strong>
             </p>

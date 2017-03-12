@@ -12,7 +12,7 @@
                     {{ $category->latestActiveThread->title }}
                 </a><br />
                 {{ $category->latestActiveThread->lastPost->created_at->diffForHumans() }}<br />
-                {{ $category->latestActiveThread->lastPost->authorName }}
+                <a href="{{ route('user.profile', $category->latestActiveThread->lastPost->author) }}">{{ $category->latestActiveThread->lastPost->authorName }}</a>
             @endif
         </td>
     @endif

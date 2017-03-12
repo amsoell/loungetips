@@ -97,7 +97,7 @@
                                     </span>
                                     <p class="lead">
                                         <a href="{{ Forum::route('thread.show', $thread) }}">{{ $thread->title }}</a><br />
-                                        by {{ $thread->authorName }}</span>
+                                        by <a href="{{ route('user.profile', $thread->author) }}">{{ $thread->authorName }}</a></span>
                                     </p>
                                 </td>
                                 @if ($thread->trashed())
@@ -108,7 +108,7 @@
                                     </td>
                                     <td class="text-right">
                                         <a href="{{ Forum::route('thread.show', $thread->lastPost) }}">{{ $thread->lastPost->posted }}</a><br />
-                                        by {{ $thread->lastPost->authorName }}
+                                        by <a href="{{ route('user.profile', $thread->lastPost->author) }}">{{ $thread->lastPost->authorName }}</a>
                                     </td>
                                 @endif
                                 @can ('manageThreads', $category)
