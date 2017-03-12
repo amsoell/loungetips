@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,17 @@ class LoginController extends Controller
             return redirect()->intended($this->redirectTo);
 
         // Try old login method
-        $user = User::where('email', $request->get('email'))->first();
+        try {
+            $user = User::where('email', $request->get('email'))->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $request->session()->flash('status', [
+                'type' => 'danger',
+                'body' => 'Invalid username or password.'
+            ]);
+
+            return redirect()->route('login');
+        }
+
         $opassword = $user->password;
         $osalt = $user->osalt;
 

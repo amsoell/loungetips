@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Find and share CD101 Lounge Tips! LoungeTips.com lets you share the tips you hear on WWCD, CD101FM in Columbus, OH with fellow listeners who may not have been tuned in to hear them.">
+    <meta name="description" content="Find and share CD102.5 Lounge Tips! LoungeTips.com lets you share the tips you hear on WWCD, CD102.5FM in Columbus, OH with fellow listeners who may not have been tuned in to hear them.">
     <meta name="keywords" content="CD101, CD 101, WWCD, 101.1, 102.5, CD101.1, CD102.5, CD1025, CD101 at 102.5, Columbus, Ohio, Radio, The Alternative Station, Alternative Station, Columbus' Best Radio, Lounge Tips, Lounge, Tips, Lounge Points, Points">
     <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="/css/app.css">
