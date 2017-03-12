@@ -22,3 +22,22 @@ Route::get('about', [ 'as' => 'about', 'uses' => function() {
 }]);
 
 Auth::routes();
+
+// 301 redirects for backwards compatability
+Route::get('about.php', function() {
+	return Redirect::to('/about', 301);
+});
+
+Route::get('top.php', function() {
+	return Redirect::to('/top', 301);
+});
+
+// Redirect Category Links
+Route::get('talk/forum{id}.html', function($id) {
+	$category = \Riari\Forum\Models\Category::find($id);
+	return Redirect::to(Forum::route('category.show', $category), 301);
+});
+
+// Redirect Forum Links
+// Redirect Topic Links
+// Redirect Post Links
