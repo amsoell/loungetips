@@ -96,7 +96,7 @@ class TipController extends Controller {
 		Cache::add('totalTips', Tip::count(), 60);
 
 		// Update topic overview
-		Cache::add('recentThreads', Thread::orderBy('updated_at', 'desc')->limit(5)->get(), 60);
+		Cache::add('recentThreads', Thread::orderBy('updated_at', 'desc')->limit(5)->get(), 10);
 
 		// Get today's tips
 		$tips = Tip::with('reports')->today()->orderBy('created_at', 'desc')->get();
