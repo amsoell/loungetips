@@ -15,7 +15,16 @@
             <li><a href="{{ route('forum.index') }}">Talk</a></li>
             <li><a href="{{ route('top') }}">Top Tips</a></li>
           </ul>
-          @includeWhen(!Auth::user(), 'partial.navigation.user')
+          @if (!Auth::user())
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ route('login') }}">Login</a></li>
+            <li><a href="{{ route('register') }}">Register</a></li>
+          </ul>
+          @else
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ route('user.profile', Auth::user()) }}">{{ Auth::user()->name }}</a></li>
+          </ul>
+          @endif
         </div>
         @if (Cache::has('recentThreads'))
         <div class="talking">
