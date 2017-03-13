@@ -23,8 +23,8 @@
 				<h3>Activity</h3>
 				<p>
 				@if ($user->posts->count() > 0)
-					<strong>First post:</strong> <a href="{{ Forum::route('post.show', $user->posts()->orderBy('created_at', 'desc')->first()) }}">{{ $user->posts()->orderBy('created_at', 'desc')->first()->created_at->format('F j, Y') }}</a><br />
-					<strong>Most recent post:</strong> <a href="{{ Forum::route('post.show', $user->posts()->orderBy('created_at', 'asc')->first()) }}">{{ $user->posts()->orderBy('created_at', 'asc')->first()->created_at->format('F j, Y') }}</a><br />
+					<strong>First post:</strong> <a href="{{ Forum::route('post.show', $user->posts()->orderBy('created_at', 'asc')->first()) }}">{{ $user->posts()->orderBy('created_at', 'asc')->first()->created_at->format('F j, Y') }}</a><br />
+					<strong>Most recent post:</strong> <a href="{{ Forum::route('post.show', $user->posts()->orderBy('created_at', 'desc')->first()) }}">{{ $user->posts()->orderBy('created_at', 'desc')->first()->created_at->format('F j, Y') }}</a><br />
 				@endif
 				@if ($user->tips->count() == 1)
 					<strong>Lone tip contribution:</strong> {{ $user->tips->first()->created_at->format('F j, Y') }} ("{{ $user->tips->first()->tip }}")<br />
