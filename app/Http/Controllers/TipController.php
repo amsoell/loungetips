@@ -99,9 +99,7 @@ class TipController extends Controller {
 		Cache::add('recentThreads', Thread::orderBy('updated_at', 'desc')->limit(5)->get(), 60);
 
 		// Get today's tips
-		$tips = Tip::with(['reports' => function ($query) use ($request) {
-			$query->where('remoteaddr', $request->ip());
-		}])->today()->orderBy('created_at', 'desc')->get();
+		$tips = Tip::with('reports')->today()->orderBy('created_at', 'desc')->get();
 
 		return view('pages.home.index', compact('tips', 'request'));
 	}

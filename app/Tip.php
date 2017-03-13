@@ -17,4 +17,8 @@ class Tip extends Model {
 	public function scopeToday($query) {
 		return $query->where('created_at', '>=', Carbon::today());
 	}
+
+	public function getConfidenceAttribute() {
+		return $this->reports->count() - ($this->reports->count() - $this->reports->sum('report'));
+	}
 }

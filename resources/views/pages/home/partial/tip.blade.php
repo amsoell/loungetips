@@ -3,8 +3,8 @@
 		@foreach ($tips as $index => $tip)
 		@includeWhen($tips->count()==1 || $tips->count()==$index+1 || $index+1==2, 'partial.ads.tip')
 		<div class="row well tip tip-{{ $index }}">
-			@includeWhen($tip->reports->count()==0, 'pages.home.partial.thumbsup')
-			<div class="col-xs-{{ $tip->reports->count()==0?'8':'12' }} text-center">
+			@includeWhen($tip->reports->where('remoteaddr', $request->ip())->count()==0, 'pages.home.partial.thumbsup')
+			<div class="col-xs-{{ $tip->reports->where('remoteaddr', $request->ip())->count()==0?'8':'12' }} text-center">
 				<div class="text">
 					Your <b>{{ $tip->description }}</b> tip is <b class="thetip">{{ $tip->tip }}</b>
 				</div>
@@ -17,11 +17,11 @@
 					@endif
 					&middot; {{ $tip->created_at->format('g:i a') }} &middot;
 					<span title="{{ $tip->reports->where('report', 1)->count() }} Good {{ $tip->reports->where('report', 0)->count() }} Bad">
-						Confidence: <span class="totalscore" rel="0">{{ $tip->reports->sum('report') - ($tip->reports->count() - $tip->reports->sum('report')) }}</span>
+						Confidence: <span class="totalscore" rel="0">{{ $tip->confidence }}</span>
 					</span>
 				</div>
 			</div>
-			@includeWhen($tip->reports->count()==0, 'pages.home.partial.thumbsdown')
+			@includeWhen($tip->reports->where('remoteaddr', $request->ip())->count()==0, 'pages.home.partial.thumbsdown')
 		</div>
 		@endforeach
 		<div class="row well">
