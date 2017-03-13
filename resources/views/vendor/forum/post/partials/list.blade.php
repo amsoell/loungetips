@@ -1,7 +1,9 @@
 <tr id="post-{{ $post->sequence }}" class="{{ $post->trashed() ? 'deleted' : '' }}" class="post-body">
     <td class="author-info">
-        <strong><a href="{{ route('user.profile', $post->author) }}">{!! $post->authorName !!}</a></strong><br />
-        <img src="//www.gravatar.com/avatar/{{ md5($post->author->email) }}?d=retro" /><br />
+        <a href="{{ route('user.profile', $post->author) }}">
+            <strong>{!! $post->authorName !!}</strong><br />
+            <img src="//www.gravatar.com/avatar/{{ md5($post->author->email) }}?d=retro" />
+        </a><br />
         <em>{{ $post->author->rank }}</em><br />
         Tips shared: {{ $post->author->tips->count() }}
     </td>
