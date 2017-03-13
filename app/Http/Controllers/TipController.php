@@ -19,7 +19,7 @@ class TipController extends Controller {
 
 	public function store(Request $request) {
 		// Quick and dirty validation
-		if (Tip::where('remoteaddr', $request->ip())->where('description', $request->get('description'))->exists()) {
+		if (Tip::today()->where('remoteaddr', $request->ip())->where('description', $request->get('description'))->exists()) {
 			$status =[
 				'type' => 'danger',
 				'body' => 'You have already submitted a tip for this period.'
