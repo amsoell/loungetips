@@ -7,7 +7,7 @@
     <meta name="description" content="Find and share CD102.5 Lounge Tips! LoungeTips.com lets you share the tips you hear on WWCD, CD102.5FM in Columbus, OH with fellow listeners who may not have been tuned in to hear them.">
     <meta name="keywords" content="CD101, CD 101, WWCD, 101.1, 102.5, CD101.1, CD102.5, CD1025, CD101 at 102.5, Columbus, Ohio, Radio, The Alternative Station, Alternative Station, Columbus' Best Radio, Lounge Tips, Lounge, Tips, Lounge Points, Points">
     <title>{{ config('app.name') }}</title>
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -60,7 +60,7 @@
         ga('send', 'pageview');
 
     </script>
-    <script src="/js/app.js"></script>
+    <script src="{{ mix('/js/app.js') }}"></script>
     @yield('custom_script')
   </body>
 </html>
