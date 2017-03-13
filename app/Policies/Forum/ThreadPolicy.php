@@ -19,7 +19,7 @@ class ThreadPolicy extends \Riari\Forum\Policies\ThreadPolicy {
 	}
 
 	public function reply($user, Thread $thread) {
-		return !$thread->locked;
+		return !($thread->locked || $user->tips->count()<1);
 	}
 
 	public function delete($user, Thread $thread) {
