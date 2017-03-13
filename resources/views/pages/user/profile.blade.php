@@ -12,31 +12,11 @@
 			</div>
 			<div class="col-xs-12 col-sm-7 text-left">
 				<h3 class="no-margin">Codename: &quot;{{ $user->name }}&quot;</h3>
-				<p><strong>Rank:</strong>
-				@php
-				$sharedTips = $user->tips->count();
-
-				if ($sharedTips >= 1025) {
-					echo 'Wowie Howie!';
-				} elseif ($sharedTips >= 500) {
-					echo 'Lounge Tip God';
-				} elseif ($sharedTips >= 100) {
-					echo 'Lounge Tip Superstar';
-				} elseif ($sharedTips >= 50) {
-					echo 'Lounge Tip Rockstar';
-				} elseif ($sharedTips >= 10) {
-					echo 'Tip Supplier';
-				} elseif ($sharedTips >= 1) {
-					echo 'Tip Contributor';
-				} else {
-					echo 'Lounge Tip Leech';
-				}
-				@endphp
-				</p>
+				<p><strong>Rank:</strong> {{ $user->rank }}</p>
 				<h3>Vitals</h3>
 				<p>
 					<strong>Joined:</strong> {{ $user->created_at->format('F j, Y') }}<br />
-					<strong>Tips shared:</strong> {{ number_format($sharedTips, 0, '.', ',') }}<br />
+					<strong>Tips shared:</strong> {{ number_format($user->tips->count(), 0, '.', ',') }}<br />
 					<strong>Posts made:</strong> {{ number_format($user->posts->count(), 0, '.', ',') }}<br />
 					<strong>Threads started:</strong> {{ number_format($user->threads->count(), 0, '.', ',') }}
 				</p>

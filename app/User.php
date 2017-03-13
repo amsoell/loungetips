@@ -40,4 +40,30 @@ class User extends Authenticatable
     public function threads() {
         return $this->hasMany(Thread::class, 'author_id');
     }
+
+    public function getRankAttribute() {
+        switch (true) {
+            case ($this->tips->count() <= 0) :
+                return 'Lounge Tip Leech';
+                break;
+            case ($this->tips->count() < 10) :
+                return 'Tip Contributor';
+                break;
+            case ($this->tips->count() < 50) :
+                return 'Lounge Tip Supplier';
+                break;
+            case ($this->tips->count() < 100) :
+                return 'Lounge Tip Rockstar';
+                break;
+            case ($this->tips->count() < 500) :
+                return 'Lounge Tip Superstar';
+                break;
+            case ($this->tips->count() < 1025) :
+                return 'Lounge Tip God';
+                break;
+            default :
+                return 'Wowie Howie!';
+                break;
+        }
+    }
 }

@@ -2,28 +2,8 @@
     <td class="author-info">
         <strong><a href="{{ route('user.profile', $post->author) }}">{!! $post->authorName !!}</a></strong><br />
         <img src="//www.gravatar.com/avatar/{{ md5($post->author->email) }}?d=retro" /><br />
-        <em>
-        @php
-            $sharedTips = $post->author->load('tips')->tips()->count();
-
-            if ($sharedTips >= 1025) {
-                echo 'Wowie Howie!';
-            } elseif ($sharedTips >= 500) {
-                echo 'Lounge Tip God';
-            } elseif ($sharedTips >= 100) {
-                echo 'Lounge Tip Superstar';
-            } elseif ($sharedTips >= 50) {
-                echo 'Lounge Tip Rockstar';
-            } elseif ($sharedTips >= 10) {
-                echo 'Tip Supplier';
-            } elseif ($sharedTips >= 1) {
-                echo 'Tip Contributor';
-            } else {
-                echo 'Lounge Tip Leech';
-            }
-        @endphp
-        </em><br />
-        Tips shared: {{ $sharedTips }}
+        <em>{{ $post->author->rank }}</em><br />
+        Tips shared: {{ $post->author->tips->count() }}
     </td>
     <td class="content">
         @if (!is_null($post->parent))
