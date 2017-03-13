@@ -79,8 +79,8 @@ class TipController extends Controller {
 				'body' => 'Thank you for reporting!'
 			];
 
-			if ((Tip::today()->where('tweeted', true)->count() > 0) &&
-				($tip->reports->sum('report') - ($tip->reports->count() - $tip->reports->sum('report') > 0) >=5 )) {
+			if ((Tip::today()->where('tweeted', true)->count() == 0) &&
+				($tip->confidence >=5 )) {
 				// First verified tip of the day. Let's tweet about it
 				$this->notify(new TipVerified($tip));
 				$tip->tweeted = true;
