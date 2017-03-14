@@ -24,6 +24,11 @@ class TipController extends Controller {
 				'type' => 'danger',
 				'body' => 'You have already submitted a tip for this period.'
 			];
+		} elseif (Tip::today()->where('tip', strtolower($request->get('tip')))->where('description', $request->get('description'))->exists()) {
+			$status =[
+				'type' => 'danger',
+				'body' => 'This tip has already been shared.'
+			];
 		} elseif (! ($request->has('tip') && $request->has('description'))) {
 			$status = [
 				'type' => 'danger',
