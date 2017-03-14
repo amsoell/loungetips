@@ -6,7 +6,7 @@ use Riari\Forum\Models\Category;
 
 class CategoryPolicy extends \Riari\Forum\Policies\CategoryPolicy {
     public function isAdmin($user) {
-        return $user->id==1;
+        return ends_with($user->email, '@loungetips.com');
     }
 
     public function createThreads($user, Category $category) {

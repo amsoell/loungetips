@@ -7,7 +7,7 @@ use Riari\Forum\Models\Thread;
 class ThreadPolicy extends \Riari\Forum\Policies\ThreadPolicy {
 
 	public function isAdmin($user) {
-		return $user->id==1;
+		return ends_with($user->email, '@loungetips.com');
 	}
 
 	public function deletePosts($user, Thread $thread) {
