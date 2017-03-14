@@ -23,6 +23,7 @@
           @else
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ route('user.profile', Auth::user()) }}">{{ Auth::user()->name }}</a></li>
+            <li><a href="{{ route('logout') }}">Logout</a></li>
           </ul>
           @endif
         </div>

@@ -24,6 +24,7 @@ Route::get('about', [ 'as' => 'about', 'uses' => function() {
 Route::get('user/{user}', [ 'as' => 'user.profile', 'uses' => 'UserController@pageProfile']);
 
 Auth::routes();
+Route::get('logout', [ 'as' => 'logout', 'uses' => 'Auth\LoginController@logout' ]);
 
 // 301 redirects for backwards compatability
 Route::get('about.php', function() {
