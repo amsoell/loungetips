@@ -48,11 +48,11 @@ class TipVerified extends Notification {
 
 	public function toTwitter($notifiable) {
 		$templates = [
-			'Hey, "%s" is the first tip of the day! Watch for the rest at loungetips.com',
-			'"%s" is the first lounge tip today. Stick around, there are more coming.',
+			'Hey, "%s" is the latest tip of the day! Watch for the rest at loungetips.com',
+			'"%s" is the latest lounge tip today. Stick around, there are more coming.',
 			'We have a verified tip for you: "%s". Enjoy!',
 			'Our crack team of tipsters have a new one for you: "%s." Listen to CD102.5 and see if you can pick up the next tip first!',
-			'Your next tip: "%s." We only share one tip each day here, visit loungetips.com if you want the rest!'
+			'Your next tip: "%s." We only share one tip each day on TWitter, visit loungetips.com if you want the rest!'
 		];
 
 		return new \NotificationChannels\Twitter\TwitterStatusUpdate(sprintf($templates[array_rand($templates)], strtolower($this->tip->tip)));
