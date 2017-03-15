@@ -85,13 +85,13 @@ class TipController extends Controller {
 			];
 
 			// This test does a couple of things (in order):
-			// 1. Semi-randomizes which tip each day gets tweeted (day-of-year mod 3-th)
-			// 2. Checks to make sure only one tweet is made each day
+			// 1. Checks to make sure only one tweet is made each day
+			// 2. Semi-randomizes which tip each day gets tweeted (day-of-year mod 3-th)
 			// 3. Ensures that a tweet has received at least 5 upvotes
-			if (((Tip::today()->count() > (date('z') % 3)) ||
-				 (Tip::today()->where('tweeted', true)->count() == 0)) &&
+			if ((Tip::today()->where('tweeted', true)->count() == 0) &&
+				(Tip::today()->count() > (date('z') % 3)) &&
 				($tip->confidence >=5 )) {
-				// First verified tip of the day. Let's tweet about it
+				// Send that tweet!
 				$this->notify(new TipVerified($tip));
 				$tip->tweeted = true;
 				$tip->update();
