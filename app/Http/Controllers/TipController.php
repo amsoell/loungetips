@@ -104,7 +104,15 @@ class TipController extends Controller {
 		Cache::add('recentThreads', Thread::orderBy('updated_at', 'desc')->limit(5)->get(), 10);
 
 		// Get today's tips
-		$tips = Tip::with('reports')->today()->orderBy('created_at', 'desc')->get();
+		$tips = Tip::with('reports')->today()->orderBy('created_at', 'desc')->get()->transform(function ($item, $key) {
+			try {
+				$item->sort = new Carbon(strtoupper($item->description));
+			} catch (Exception $e) {
+				// text wasn't parsable—put it at the bottom of the sort
+				$item->sort = Carbon::yesterday();
+			}
+			return $item;
+		})->sortByDesc('sort')->values();
 
 		return view('pages.home.index', compact('tips', 'request'));
 	}

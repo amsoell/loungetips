@@ -39,8 +39,8 @@
 						</optgroup>
 						<optgroup label="special">
 							<option value="">Sounding Board</option>
-							<option value="">Text Club</option>
-							<option value="">Trivia</option>
+							<option value="text club">Text Club</option>
+							<option value="trivia">Trivia</option>
 						</optgroup>
 					</select>
 				</div>
