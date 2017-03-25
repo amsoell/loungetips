@@ -68,6 +68,11 @@ class TipController extends Controller {
 				'type' => 'danger',
 				'body' => 'You have already reported on this tip.'
 			];
+		} elseif ($tip->created_at < Carbon::today()) {
+			$status = [
+				'type' => 'danger',
+				'body' => 'You cannot report tips from previous days.'
+			];
 		} else {
 
 			$report = new Report();
