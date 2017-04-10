@@ -5,8 +5,8 @@
 
     RewriteEngine On
 
-    RewriteCond %{HTTP_HOST} ^.+\.loungetips\.com [NC]
-    RewriteRule ^(.*)$ http://loungetips.com/$1 [L,R=301]
+    Rewritecond %{HTTP_HOST} !^loungetips\.com
+    RewriteRule ^(.*)$ http://loungetips.com/$1 [R=301,L]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
