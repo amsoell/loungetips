@@ -49,7 +49,7 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
-						<iframe src="http://els.fimc.net/wwcd/els/elsLoginFrm.asp" frameborder="0" scrolling="yes" style="width: 100%; height: 550px"></iframe>
+						<iframe src="http://lounge.cd1025.com/" frameborder="0" scrolling="yes" style="width: 100%; height: 550px"></iframe>
 					</div>
 				</div>
 			</div>
