@@ -26,9 +26,9 @@
 		@endforeach
 		<div class="row well">
 			<div class="col-xs-12 text-center">
-				<button type="button" class="btn btn-link btn-lg" data-toggle="modal" data-target="#loungeModal">
+				<a href="http://lounge.cd1025.com" target="_blank" class="btn btn-link btn-lg">
 					Go to the Lounge
-				</button>
+				</a>
 			</div>
 		</div>
 	</div>
