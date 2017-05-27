@@ -119,6 +119,11 @@ class TipController extends Controller {
 			return $item;
 		})->sortByDesc('sort')->values();
 
+		// Filter out tips with more than two bad reports
+		$tips = $tips->reject(function ($value, $key) {
+			return $value->reports->where('report', 0)->count() > 2;
+		});
+
 		return view('pages.home.index', compact('tips', 'request'));
 	}
 
