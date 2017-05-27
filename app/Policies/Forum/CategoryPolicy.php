@@ -10,7 +10,7 @@ class CategoryPolicy extends \Riari\Forum\Policies\CategoryPolicy {
     }
 
     public function createThreads($user, Category $category) {
-        return true;
+        return ($user->tips->count() > 0);
     }
 
     public function manageThreads($user, Category $category) {
