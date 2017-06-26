@@ -29,6 +29,48 @@ class _ForumTest extends DuskTestCase
 		});
 	}
 
+	public function testUserNoTipsPost() {
+		$this->populateForum();
+		$this->browse(function (Browser $browser) {
+			$browser->loginAs(User::inRandomOrder()->first())
+				->visit('/talk');
+			$forum_category = $browser->text('table .category ~ tr .lead a');
+			$forum_category_url = $browser->attribute('table .category ~ tr .lead a', 'href');
+
+			$browser->clickLink($forum_category)
+				->assertDontSee('New thread');
+
+			$browser->visit($forum_category_url.'/thread/create')
+				->type('title', 'Test subject')
+				->type('content', 'Sed posuere consectetur est at lobortis. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vitae elit libero, a pharetra augue.')
+				->press('Create')
+				->assertSee('HttpException');
+		});
+	}
+
+	public function testUserOneTipPost() {
+		$this->populateForum();
+		$user = User::inRandomOrder()->first();
+		factory(\App\Tip::class)->create([
+			'user_id' => $user->id
+		]);
+
+		$this->browse(function (Browser $browser) use ($user) {
+			$browser->loginAs($user)
+				->visit('/talk');
+			$forum_category = $browser->text('table .category ~ tr .lead a');
+			$forum_category_url = $browser->attribute('table .category ~ tr .lead a', 'href');
+
+			$browser->clickLink($forum_category)
+				->assertSee('New thread')
+				->clickLink('New thread')
+				->type('title', 'Test subject')
+				->type('content', 'Sed posuere consectetur est at lobortis. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vitae elit libero, a pharetra augue.')
+				->press('Create')
+				->assertSee('Test subject');
+		});
+	}
+
 	public function populateForum() {
 		// Create 5 users
 		factory(User::class, 5)->create();
