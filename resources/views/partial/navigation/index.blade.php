@@ -35,7 +35,9 @@
             @if (!$loop->first)
               &nbsp;&middot;&nbsp;
             @endif
+            @if ( property_exists($thread, 'posts') )
               <a href="{{ Forum::route('thread.show', $thread) }}?page={{ ceil($thread->posts->count() / 15) }}#post-{{ $thread->posts->count() }}">{{ $thread->title }}</a>
+            @endif
             </span>
           @endforeach
         </div>
