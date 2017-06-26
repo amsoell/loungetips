@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\User;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -29,25 +30,24 @@ class _ForumTest extends DuskTestCase
 	}
 
 	public function populateForum() {
-		$user = factory(\App\User::class)->create();
-		$category = factory(\Riari\Forum\Models\Category::class)->create();
+		// Create 5 users
+		factory(User::class, 5)->create();
 
-		for ($j=0; $j<3; $j++) {
-			$thread = factory(\Riari\Forum\Models\Thread::class)->make();
-			$thread->author()->associate($user);
-			$thread->category()->associate($category);
-			$thread->save();
-
-			for ($i=0; $i < 5; $i++) {
-				$post = factory(\Riari\Forum\Models\Post::class)->make();
-				$post->unsetEventDispatcher(); // To prevent the sequence from being set
-
-				$post->author()->associate($user);
-				$post->thread()->associate($thread);
-				$post->sequence = 1;
-				$post->save();
-			}
-		}
+		// Create 5 categories...
+		// ...with 3 threads each...
+		// ...with 4 messages each.
+		factory(\Riari\Forum\Models\Category::class, 5)->create()->each(function ($category) {
+			factory(\Riari\Forum\Models\Thread::class, 3)->create([
+				'category_id' => $category->id,
+				'author_id'   => User::inRandomOrder()->first()->id,
+			])->each(function ($thread) {
+				$post = factory(\Riari\Forum\Models\Post::class, 4)->create([
+					'author_id' => User::inRandomOrder()->first()->id,
+					'thread_id' => $thread->id,
+					'sequence' => 1,
+				]);
+			});
+		});
 	}
 
 }
