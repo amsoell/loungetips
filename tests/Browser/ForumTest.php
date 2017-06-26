@@ -3,6 +3,7 @@
 namespace Tests\Browser;
 
 use App\User;
+use Faker\Factory as Faker;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -32,6 +33,8 @@ class _ForumTest extends DuskTestCase
 	public function testUserNoTipsPost() {
 		$this->populateForum();
 		$this->browse(function (Browser $browser) {
+			$faker = Faker::create();
+
 			$browser->loginAs(User::inRandomOrder()->first())
 				->visit('/talk');
 			$forum_category = $browser->text('table .category ~ tr .lead a');
@@ -41,8 +44,8 @@ class _ForumTest extends DuskTestCase
 				->assertDontSee('New thread');
 
 			$browser->visit($forum_category_url.'/thread/create')
-				->type('title', 'Test subject')
-				->type('content', 'Sed posuere consectetur est at lobortis. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vitae elit libero, a pharetra augue.')
+				->type('title', $faker->words(4, true))
+				->type('content', $faker->sentences(3))
 				->press('Create')
 				->assertSee('HttpException');
 		});
@@ -50,24 +53,29 @@ class _ForumTest extends DuskTestCase
 
 	public function testUserOneTipPost() {
 		$this->populateForum();
+
 		$user = User::inRandomOrder()->first();
 		factory(\App\Tip::class)->create([
 			'user_id' => $user->id
 		]);
 
 		$this->browse(function (Browser $browser) use ($user) {
+			$faker = Faker::create();
+
 			$browser->loginAs($user)
 				->visit('/talk');
 			$forum_category = $browser->text('table .category ~ tr .lead a');
 			$forum_category_url = $browser->attribute('table .category ~ tr .lead a', 'href');
 
+			$subject = $faker->words(4, true);
+
 			$browser->clickLink($forum_category)
 				->assertSee('New thread')
 				->clickLink('New thread')
-				->type('title', 'Test subject')
-				->type('content', 'Sed posuere consectetur est at lobortis. Donec sed odio dui. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla vitae elit libero, a pharetra augue.')
+				->type('title', $subject)
+				->type('content', $faker->sentences(3))
 				->press('Create')
-				->assertSee('Test subject');
+				->assertSee($subject);
 		});
 	}
 
