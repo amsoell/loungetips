@@ -22,3 +22,23 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(Riari\Forum\Models\Category::class, function (Faker\Generator $faker) {
+    return [
+        'title'          => $faker->sentence(5),
+        'enable_threads' => true,
+    ];
+});
+
+$factory->define(Riari\Forum\Models\Thread::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->sentence(8),
+    ];
+});
+
+$factory->define(Riari\Forum\Models\Post::class, function (Faker\Generator $faker) {
+    return [
+        'content' => $faker->sentence(15),
+        'sequence' => 1
+    ];
+});
